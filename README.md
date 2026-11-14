@@ -16,12 +16,13 @@ metodologia de Aswath Damodaran (DCF, Múltiplos, Qualidade).
 ```
 analista_pt_vercel/
 ├── api/
-│   └── index.py       # backend Flask — GET /api/dados?ticker=EDP.LS
-├── index.html          # página principal
-├── style.css
-├── script.js            # cálculos financeiros + gráficos (Plotly.js)
-├── requirements.txt     # dependências Python da função
-└── vercel.json           # routing (/api/* -> api/index.py)
+│   └── index.py       # Flask: serve o frontend em / e a API em /api/dados
+├── public/
+│   ├── index.html     # página principal
+│   ├── style.css
+│   └── script.js      # cálculos financeiros + gráficos (Plotly.js)
+├── requirements.txt
+└── vercel.json        # encaminha tudo para o Flask e inclui public/ na função
 ```
 
 ## Testar localmente

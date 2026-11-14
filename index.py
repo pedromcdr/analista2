@@ -9,12 +9,29 @@ para que ajustar pressupostos (Rf, ERP, g...) seja instantâneo.
 """
 
 import math
+import os
 import numpy as np
 import pandas as pd
 import yfinance as yf
-from flask import Flask, jsonify, request
+from flask import Flask, jsonify, request, send_from_directory, abort
 
-app = Flask(__name__)
+# O frontend (index.html, style.css, script.js) vive em ../public
+PUBLIC_DIR = os.path.abspath(os.path.join(os.path.dirname(__file__), "..", "public"))
+
+app = Flask(__name__, static_folder=None)
+
+
+@app.route("/")
+def home():
+    return send_from_directory(PUBLIC_DIR, "index.html")
+
+
+@app.route("/<path:filename>")
+def ficheiros_estaticos(filename):
+    """Serve style.css, script.js, etc. (fallback caso o Vercel encaminhe tudo para o Flask)."""
+    if filename.startswith("api/"):
+        abort(404)
+    return send_from_directory(PUBLIC_DIR, filename)
 
 
 def clean(x):
